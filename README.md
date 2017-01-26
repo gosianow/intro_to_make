@@ -1,1 +1,9 @@
-# intro_to_make
+# Code review - Intro to make
+
+```sh
+make
+```
+
+```makefile
+VAR: Gosia
+```
