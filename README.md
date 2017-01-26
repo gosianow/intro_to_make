@@ -64,7 +64,6 @@ You can tell make which targets to update:
 $ make -f makefile_test2 test2_double.txt
 ```
 
-***
 ## Phony Targets
 
 makefile_test2b:
@@ -84,6 +83,94 @@ test2_double.txt : test2.txt
 ```sh
 $ make -f makefile_test2b
 ```
+
+## Variables
+
+To make your life simpler.
+
+makefile_cool1:
+
+```makefile
+VAR := Gosia
+
+.PHONY: one
+
+one:
+  echo "$(VAR) is coool!"
+```
+
+
+```sh
+$ make -f makefile_cool1
+```
+
+```sh
+$ make -f makefile_cool1 VAR="Helen"
+```
+
+## Multiple line definition
+
+```makefile
+VAR := Gosia
+VARS := Gosia Padu Cate Luka
+
+.PHONY: all one multiple
+
+all: one multiple
+
+one:
+  echo "$(VAR) is coool!"
+
+multiple: $(foreach i,$(VARS),multiple_$(i))
+
+define print_name
+multiple_$(1):
+  echo "$(1) is coool!"
+endef
+$(foreach i,$(VARS),$(eval $(call print_name,$(i))))
+```
+
+```sh
+$ make -f makefile_cool2 VAR="Helen Lukas"
+$ make -f makefile_cool2 VARS="Helen Lukas"
+```
+
+Other useful functions:
+
+- returns the n-th word of text *`$(word n,text)`*
+
+```makefile
+SERVERS := penticton taupo
+$(word, 1, $(SERVERS))
+```
+
+## R CMD BATCH
+
+
+## .SECONDARY
+
+Make sure no intermediate files are deleted.
+
+
+## --touch
+
+
+## JSON
+
+`rjson` [package](https://www.tutorialspoint.com/r/r_json_files.htm) to import jason files into R.
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -1,0 +1,6 @@
+VAR := Gosia
+
+.PHONY: one
+
+one:
+	echo "$(VAR) is coool!"

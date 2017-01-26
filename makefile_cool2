@@ -1,0 +1,17 @@
+VAR := Gosia
+VARS := Gosia Padu Cate Luka
+
+.PHONY: all one multiple
+
+all: one multiple
+
+one:
+	echo "$(VAR) is coool!"
+
+multiple: $(foreach i,$(VARS),multiple_$(i))
+
+define print_name
+multiple_$(1):
+	echo "$(1) is coool!"
+endef
+$(foreach i,$(VARS),$(eval $(call print_name,$(i))))

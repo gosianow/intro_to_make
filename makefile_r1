@@ -1,0 +1,38 @@
+RWD := .
+RCODE := rcode
+ROUT := rout
+
+FILES := test1 test2
+
+.PHONY: all
+
+all: mkdir_rout $(foreach i,$(FILES),$(i)_barplot.pdf)
+
+### Make sure no intermediate files are deleted
+# .SECONDARY:
+
+
+.PHONY: mkdir_rout
+mkdir_rout:
+	mkdir -p $(ROUT)
+
+
+define calculate_sum
+$(1)_sum.txt: $(1).txt $(RCODE)/01_calculate_sum.R
+	R CMD BATCH --no-restore --no-save "--args rwd='$(RWD)' outdir='.' path_file='$(1).txt' prefix='$(1)_'" $(RCODE)/01_calculate_sum.R $(ROUT)/01_calculate_sum.Rout
+endef
+$(foreach i,$(FILES),$(eval $(call calculate_sum,$(i))))
+
+
+define plot_barplot
+$(1)_barplot.pdf: $(1)_sum.txt $(RCODE)/02_barplot.R
+  R CMD BATCH --no-restore --no-save "--args rwd='$(RWD)' outdir='.' path_file='$(1)_sum.txt' prefix='$(1)_' color='blue'" $(RCODE)/02_barplot.R $(ROUT)/02_barplot.Rout
+endef
+$(foreach i,$(FILES),$(eval $(call plot_barplot,$(i))))
+
+
+
+
+
+
+#
