@@ -1,4 +1,4 @@
-### Code review - Intro to make
+# Code review - Intro to make
 
 [Manual available here.](https://www.gnu.org/software/make/manual/make.html)
 
@@ -16,7 +16,7 @@ TAB character at the beginning of every recipe line!
 ***
 
 ```sh
-cd /to/the/git/repo
+$ cd /to/the/git/repo
 ```
 
 Normally you should call your makefile either `makefile` or `Makefile`. If not, use `-f` or `--file` option.
@@ -29,13 +29,13 @@ test1_double.txt : test1.txt
 ```
 
 ```sh
-make -f makefile_test1
+$ make -f makefile_test1
 ```
 
 Run again:
 
 ```sh
-make -f makefile_test1
+$ make -f makefile_test1
 ```
 
 ***
@@ -53,7 +53,7 @@ test2_double.txt : test2.txt
 ```
 
 ```sh
-make -f makefile_test2
+$ make -f makefile_test2
 ```
 
 By default, make starts with the first target which is called the _default_goal_ and processes only rules whose targets are prerequisits of the goal.  
@@ -61,11 +61,11 @@ By default, make starts with the first target which is called the _default_goal_
 You can tell make which targets to update:
 
 ```sh
-make -f makefile_test2 test2_double.txt
+$ make -f makefile_test2 test2_double.txt
 ```
 
 ***
-# Phony Targets
+## Phony Targets
 
 makefile_test2b:
 
@@ -82,7 +82,7 @@ test2_double.txt : test2.txt
 ```
 
 ```sh
-make -f makefile_test2b
+$ make -f makefile_test2b
 ```
 
 
