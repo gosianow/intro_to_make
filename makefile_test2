@@ -1,0 +1,5 @@
+test1_double.txt : test1.txt
+	cp test1.txt test1_double.txt
+	
+test2_double.txt : test2.txt
+	cp test2.txt test2_double.txt
