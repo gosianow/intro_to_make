@@ -24,7 +24,6 @@ $(foreach i,$(FILES),$(eval $(call calculate_sum,$(i))))
 
 
 .PHONY: plot_barplot_goal
-
 plot_barplot_goal: $(foreach i,$(FILES),$(i)_barplot.pdf)
 
 define plot_barplot

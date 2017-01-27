@@ -1,0 +1,2 @@
+%_double.txt : %.txt
+	cp $*.txt $*_double.txt

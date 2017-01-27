@@ -89,6 +89,20 @@ test2_double.txt : test2.txt
 $ make -f makefile_test2b
 ```
 
+## % and $*
+
+makefile_test2c:
+
+```makefile
+%_double.txt : %.txt
+  cp $*.txt $*_double.txt
+```
+
+```sh
+$ make -f makefile_test2c
+```
+
+
 ## Variables
 
 To make your life simpler.
@@ -151,10 +165,7 @@ $(word, 1, $(SERVERS))
 
 ## R CMD BATCH
 
-
-
-
-
+A riddle in makefile_r1 :D
 
 ## .SECONDARY
 
