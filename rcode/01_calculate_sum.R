@@ -4,6 +4,8 @@
 # Created 26 Jan 2017
 # Updated 26 Jan 2017
 
+
+
 ##############################################################################
 Sys.time()
 ##############################################################################
@@ -48,7 +50,6 @@ out <- sum(x)
 
 write.table(out, file = file.path(outdir, paste0(prefix, "sum.txt")), quote = FALSE, sep = "\t", 
   row.names = FALSE, col.names = FALSE)
-
 
 
 

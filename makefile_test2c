@@ -1,2 +1,5 @@
+.PHONY: all
+all : test1_double.txt test2_double.txt
+
 %_double.txt : %.txt
 	cp $*.txt $*_double.txt

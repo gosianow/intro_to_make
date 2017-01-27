@@ -75,7 +75,6 @@ makefile_test2b:
 
 ```makefile
 .PHONY: all
-
 all : test1_double.txt test2_double.txt
 
 test1_double.txt : test1.txt
@@ -94,6 +93,9 @@ $ make -f makefile_test2b
 makefile_test2c:
 
 ```makefile
+.PHONY: all
+all : test1_double.txt test2_double.txt
+
 %_double.txt : %.txt
   cp $*.txt $*_double.txt
 ```
@@ -165,12 +167,56 @@ $(word, 1, $(SERVERS))
 
 ## R CMD BATCH
 
-A riddle in makefile_r1 :D
+makefile_r1:
+
+```makefile
+RWD := .
+RCODE := rcode
+ROUT := rout
+
+FILES := test1 test2
+
+### Define the default rule
+.PHONY: all
+all: mkdir_rout plot_barplot_goal
+
+### Make sure no intermediate files are deleted
+.SECONDARY:
+
+.PHONY: mkdir_rout
+mkdir_rout:
+  mkdir -p $(ROUT)
+
+
+define calculate_sum
+$(1)_sum.txt: $(1).txt $(RCODE)/01_calculate_sum.R
+  R CMD BATCH --no-restore --no-save "--args rwd='$(RWD)' outdir='.' \
+path_file='$(1).txt' prefix='$(1)_'" \
+$(RCODE)/01_calculate_sum.R $(ROUT)/01_calculate_sum.Rout
+endef
+$(foreach i,$(FILES),$(eval $(call calculate_sum,$(i))))
+
+
+.PHONY: plot_barplot_goal
+plot_barplot_goal: $(foreach i,$(FILES),$(i)_barplot.pdf)
+
+define plot_barplot
+$(1)_barplot.pdf: $(1)_sum.txt $(RCODE)/02_barplot.R 
+  R CMD BATCH --no-restore --no-save "--args rwd='$(RWD)' \
+outdir='.' path_file='$(1)_sum.txt' prefix='$(1)_' color='red'" \
+$(RCODE)/02_barplot.R $(ROUT)/02_barplot.Rout
+endef
+$(foreach i,$(FILES),$(eval $(call plot_barplot,$(i))))
+```
+
+```sh
+$ make -f makefile_r1
+```
+
 
 ## .SECONDARY
 
 Make sure no intermediate files are deleted.
-Place this command at the of the make file.
  
 ```makefile
 .SECONDARY:

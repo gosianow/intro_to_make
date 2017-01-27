@@ -18,7 +18,9 @@ mkdir_rout:
 
 define calculate_sum
 $(1)_sum.txt: $(1).txt $(RCODE)/01_calculate_sum.R
-	R CMD BATCH --no-restore --no-save "--args rwd='$(RWD)' outdir='.' path_file='$(1).txt' prefix='$(1)_'" $(RCODE)/01_calculate_sum.R $(ROUT)/01_calculate_sum.Rout
+	R CMD BATCH --no-restore --no-save "--args rwd='$(RWD)' outdir='.' \
+path_file='$(1).txt' prefix='$(1)_'" \
+$(RCODE)/01_calculate_sum.R $(ROUT)/01_calculate_sum.Rout
 endef
 $(foreach i,$(FILES),$(eval $(call calculate_sum,$(i))))
 
@@ -27,8 +29,10 @@ $(foreach i,$(FILES),$(eval $(call calculate_sum,$(i))))
 plot_barplot_goal: $(foreach i,$(FILES),$(i)_barplot.pdf)
 
 define plot_barplot
-$(1)_barplot.pdf: $(1)_sum.txt $(RCODE)/02_barplot.R
-  R CMD BATCH --no-restore --no-save "--args rwd='$(RWD)' outdir='.' path_file='$(1)_sum.txt' prefix='$(1)_' color='blue'" $(RCODE)/02_barplot.R $(ROUT)/02_barplot.Rout
+$(1)_barplot.pdf: $(1)_sum.txt $(RCODE)/02_barplot.R 
+	R CMD BATCH --no-restore --no-save "--args rwd='$(RWD)' \
+outdir='.' path_file='$(1)_sum.txt' prefix='$(1)_' color='red'" \
+$(RCODE)/02_barplot.R $(ROUT)/02_barplot.Rout
 endef
 $(foreach i,$(FILES),$(eval $(call plot_barplot,$(i))))
 
@@ -36,5 +40,3 @@ $(foreach i,$(FILES),$(eval $(call plot_barplot,$(i))))
 
 
 
-
-#
