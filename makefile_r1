@@ -4,13 +4,12 @@ ROUT := rout
 
 FILES := test1 test2
 
+### Define the default rule
 .PHONY: all
-
-all: mkdir_rout $(foreach i,$(FILES),$(i)_barplot.pdf)
+all: mkdir_rout plot_barplot_goal
 
 ### Make sure no intermediate files are deleted
-# .SECONDARY:
-
+.SECONDARY:
 
 .PHONY: mkdir_rout
 mkdir_rout:
@@ -23,6 +22,10 @@ $(1)_sum.txt: $(1).txt $(RCODE)/01_calculate_sum.R
 endef
 $(foreach i,$(FILES),$(eval $(call calculate_sum,$(i))))
 
+
+.PHONY: plot_barplot_goal
+
+plot_barplot_goal: $(foreach i,$(FILES),$(i)_barplot.pdf)
 
 define plot_barplot
 $(1)_barplot.pdf: $(1)_sum.txt $(RCODE)/02_barplot.R

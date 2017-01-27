@@ -19,7 +19,8 @@ TAB character at the beginning of every recipe line!
 $ cd /to/the/git/repo
 ```
 
-Normally you should call your makefile either `makefile` or `Makefile`. If not, use `-f` or `--file` option.
+Normally you should call your makefile either `makefile` or `Makefile`. 
+If not, use `-f` or `--file` option.
 
 makefile_test1:
 
@@ -56,9 +57,13 @@ test2_double.txt : test2.txt
 $ make -f makefile_test2
 ```
 
-By default, make starts with the first target which is called the _default_goal_ and processes only rules whose targets are prerequisits of the goal.  
+By default, make starts with the first target which is called the _default_goal_ 
+and processes only rules whose targets are prerequisits of the goal.  
 
-You can tell make which targets to update:
+Makefiles are usually written so that the first target is for compiling 
+the entire program.
+
+Or you can tell make which targets to update:
 
 ```sh
 $ make -f makefile_test2 test2_double.txt
@@ -147,17 +152,27 @@ $(word, 1, $(SERVERS))
 ## R CMD BATCH
 
 
+
+
+
+
 ## .SECONDARY
 
 Make sure no intermediate files are deleted.
+Place this command at the of the make file.
+ 
+```makefile
+.SECONDARY:
+```
 
+## --touch or -t
 
-## --touch
-
+Marks targets as up to date without actually changing them.
 
 ## JSON
 
-`rjson` [package](https://www.tutorialspoint.com/r/r_json_files.htm) to import jason files into R.
+`rjson` [package](https://www.tutorialspoint.com/r/r_json_files.htm) 
+to import jason files into R.
 
 
 
